@@ -18,7 +18,7 @@ const (
     errFailedToRead          = "failed to read response: %w"
     errFailedToCreateRequest = "failed to create request: %w"
     errFailedToMakeRequest   = "failed to make request: %w"
-    errHTTP                  = "SAD FAIL: %s"
+    errHTTP                  = "HTTP status code %d for URL %s: %s"
     headerAuthorization      = "api-key"
     headerContentType        = "Content-Type"
 )
@@ -104,8 +104,7 @@ func (r *RestCaller) doRequest(method, url string, body []byte, stream bool) ([]
     defer response.Body.Close()
 
     if response.StatusCode < 200 || response.StatusCode >= 300 {
-        // return nil, fmt.Errorf(errHTTP, response.StatusCode)
-        return nil, fmt.Errorf(errHTTP, url)
+        return nil, fmt.Errorf(errHTTP, response.StatusCode, url, response.Status)
     }
 
     if stream {

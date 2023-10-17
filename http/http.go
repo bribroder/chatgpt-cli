@@ -1,134 +1,135 @@
 package http
 
 import (
-	"bufio"
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"github.com/bribroder/chatgpt-cli/types"
-	"io"
-	"net/http"
-	"os"
-	"strings"
+    "bufio"
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "github.com/bribroder/chatgpt-cli/types"
+    "io"
+    "net/http"
+    "os"
+    "strings"
 )
 
 const (
-	bearer                   = "Bearer %s"
-	contentType              = "application/json"
-	errFailedToRead          = "failed to read response: %w"
-	errFailedToCreateRequest = "failed to create request: %w"
-	errFailedToMakeRequest   = "failed to make request: %w"
-	errHTTP                  = "http error: %d"
-	headerAuthorization      = "Authorization"
-	headerContentType        = "Content-Type"
+    bearer                   = "%s"
+    contentType              = "application/json"
+    errFailedToRead          = "failed to read response: %w"
+    errFailedToCreateRequest = "failed to create request: %w"
+    errFailedToMakeRequest   = "failed to make request: %w"
+    errHTTP                  = "SAD FAIL: %s"
+    headerAuthorization      = "api-key"
+    headerContentType        = "Content-Type"
 )
 
 type Caller interface {
-	Post(url string, body []byte, stream bool) ([]byte, error)
-	Get(url string) ([]byte, error)
-	SetAPIKey(secret string)
+    Post(url string, body []byte, stream bool) ([]byte, error)
+    Get(url string) ([]byte, error)
+    SetAPIKey(secret string)
 }
 
 type RestCaller struct {
-	client *http.Client
-	secret string
+    client *http.Client
+    secret string
 }
 
 // Ensure RestCaller implements Caller interface
 var _ Caller = &RestCaller{}
 
 func New() *RestCaller {
-	return &RestCaller{
-		client: &http.Client{},
-	}
+    return &RestCaller{
+        client: &http.Client{},
+    }
 }
 
 func (r *RestCaller) SetAPIKey(secret string) {
-	r.secret = secret
+    r.secret = secret
 }
 
 func (r *RestCaller) Get(url string) ([]byte, error) {
-	return r.doRequest(http.MethodGet, url, nil, false)
+    return r.doRequest(http.MethodGet, url, nil, false)
 }
 
 func (r *RestCaller) Post(url string, body []byte, stream bool) ([]byte, error) {
-	return r.doRequest(http.MethodPost, url, body, stream)
+    return r.doRequest(http.MethodPost, url, body, stream)
 }
 
 func ProcessResponse(r io.Reader, w io.Writer) []byte {
-	var result []byte
+    var result []byte
 
-	scanner := bufio.NewScanner(r)
-	for scanner.Scan() {
-		line := scanner.Text()
-		if strings.HasPrefix(line, "data:") {
-			line = line[6:] // Skip the "data: " prefix
-			if len(line) < 6 {
-				continue
-			}
+    scanner := bufio.NewScanner(r)
+    for scanner.Scan() {
+        line := scanner.Text()
+        if strings.HasPrefix(line, "data:") {
+            line = line[6:] // Skip the "data: " prefix
+            if len(line) < 6 {
+                continue
+            }
 
-			if line == "[DONE]" {
-				_, _ = w.Write([]byte("\n"))
-				result = append(result, []byte("\n")...)
-				break
-			}
+            if line == "[DONE]" {
+                _, _ = w.Write([]byte("\n"))
+                result = append(result, []byte("\n")...)
+                break
+            }
 
-			var data types.Data
-			err := json.Unmarshal([]byte(line), &data)
-			if err != nil {
-				_, _ = fmt.Fprintf(w, "Error: %s\n", err.Error())
-				continue
-			}
+            var data types.Data
+            err := json.Unmarshal([]byte(line), &data)
+            if err != nil {
+                _, _ = fmt.Fprintf(w, "Error: %s\n", err.Error())
+                continue
+            }
 
-			for _, choice := range data.Choices {
-				if content, ok := choice.Delta["content"]; ok {
-					_, _ = w.Write([]byte(content))
-					result = append(result, []byte(content)...)
-				}
-			}
-		}
-	}
-	return result
+            for _, choice := range data.Choices {
+                if content, ok := choice.Delta["content"]; ok {
+                    _, _ = w.Write([]byte(content))
+                    result = append(result, []byte(content)...)
+                }
+            }
+        }
+    }
+    return result
 }
 
 func (r *RestCaller) doRequest(method, url string, body []byte, stream bool) ([]byte, error) {
-	req, err := r.newRequest(method, url, body)
-	if err != nil {
-		return nil, fmt.Errorf(errFailedToCreateRequest, err)
-	}
+    req, err := r.newRequest(method, url, body)
+    if err != nil {
+        return nil, fmt.Errorf(errFailedToCreateRequest, err)
+    }
 
-	response, err := r.client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf(errFailedToMakeRequest, err)
-	}
-	defer response.Body.Close()
+    response, err := r.client.Do(req)
+    if err != nil {
+        return nil, fmt.Errorf(errFailedToMakeRequest, err)
+    }
+    defer response.Body.Close()
 
-	if response.StatusCode < 200 || response.StatusCode >= 300 {
-		return nil, fmt.Errorf(errHTTP, response.StatusCode)
-	}
+    if response.StatusCode < 200 || response.StatusCode >= 300 {
+        // return nil, fmt.Errorf(errHTTP, response.StatusCode)
+        return nil, fmt.Errorf(errHTTP, url)
+    }
 
-	if stream {
-		return ProcessResponse(response.Body, os.Stdout), nil
-	}
+    if stream {
+        return ProcessResponse(response.Body, os.Stdout), nil
+    }
 
-	result, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, fmt.Errorf(errFailedToRead, err)
-	}
+    result, err := io.ReadAll(response.Body)
+    if err != nil {
+        return nil, fmt.Errorf(errFailedToRead, err)
+    }
 
-	return result, nil
+    return result, nil
 }
 
 func (r *RestCaller) newRequest(method, url string, body []byte) (*http.Request, error) {
-	req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
-	if err != nil {
-		return nil, err
-	}
+    req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
+    if err != nil {
+        return nil, err
+    }
 
-	if r.secret != "" {
-		req.Header.Set(headerAuthorization, fmt.Sprintf(bearer, r.secret))
-	}
-	req.Header.Set(headerContentType, contentType)
+    if r.secret != "" {
+        req.Header.Set(headerAuthorization, fmt.Sprintf(bearer, r.secret))
+    }
+    req.Header.Set(headerContentType, contentType)
 
-	return req, nil
+    return req, nil
 }

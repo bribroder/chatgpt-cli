@@ -6,4 +6,4 @@ rm -f bin/*
 
 TARGET_OS=${1:-darwin}
 
-source ./scripts/install.sh $TARGET_OS
+source ./install.sh $TARGET_OS

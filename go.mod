@@ -1,4 +1,4 @@
-module github.com/kardolus/chatgpt-cli
+module github.com/bribroder/chatgpt-cli
 
 go 1.20
 

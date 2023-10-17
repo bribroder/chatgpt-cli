@@ -5,9 +5,9 @@ import (
 	"errors"
 	"github.com/golang/mock/gomock"
 	_ "github.com/golang/mock/mockgen/model"
-	"github.com/kardolus/chatgpt-cli/client"
-	"github.com/kardolus/chatgpt-cli/types"
-	"github.com/kardolus/chatgpt-cli/utils"
+	"github.com/bribroder/chatgpt-cli/client"
+	"github.com/bribroder/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/utils"
 	"os"
 	"strings"
 	"testing"
@@ -17,9 +17,9 @@ import (
 	"github.com/sclevine/spec/report"
 )
 
-//go:generate mockgen -destination=callermocks_test.go -package=client_test github.com/kardolus/chatgpt-cli/http Caller
-//go:generate mockgen -destination=historymocks_test.go -package=client_test github.com/kardolus/chatgpt-cli/history HistoryStore
-//go:generate mockgen -destination=configmocks_test.go -package=client_test github.com/kardolus/chatgpt-cli/config ConfigStore
+//go:generate mockgen -destination=callermocks_test.go -package=client_test github.com/bribroder/chatgpt-cli/http Caller
+//go:generate mockgen -destination=historymocks_test.go -package=client_test github.com/bribroder/chatgpt-cli/history HistoryStore
+//go:generate mockgen -destination=configmocks_test.go -package=client_test github.com/bribroder/chatgpt-cli/config ConfigStore
 
 const (
 	defaultMaxTokens       = 4096

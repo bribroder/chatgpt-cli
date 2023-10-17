@@ -1,8 +1,8 @@
 package configmanager
 
 import (
-	"github.com/kardolus/chatgpt-cli/config"
-	"github.com/kardolus/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/config"
+	"github.com/bribroder/chatgpt-cli/types"
 	"gopkg.in/yaml.v3"
 	"os"
 	"reflect"

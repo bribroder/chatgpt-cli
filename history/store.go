@@ -2,9 +2,9 @@ package history
 
 import (
 	"encoding/json"
-	"github.com/kardolus/chatgpt-cli/config"
-	"github.com/kardolus/chatgpt-cli/types"
-	"github.com/kardolus/chatgpt-cli/utils"
+	"github.com/bribroder/chatgpt-cli/config"
+	"github.com/bribroder/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/utils"
 	"os"
 	"path"
 	"path/filepath"

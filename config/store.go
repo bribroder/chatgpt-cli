@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/kardolus/chatgpt-cli/types"
-	"github.com/kardolus/chatgpt-cli/utils"
+	"github.com/bribroder/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/utils"
 	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"

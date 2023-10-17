@@ -24,7 +24,7 @@ git push origin --tags
 
 ## 3. Create binaries
 
-From the root of `kardolus/chatgpt-cli`, run the following script to create binaries for various architectures:
+From the root of `bribroder/chatgpt-cli`, run the following script to create binaries for various architectures:
 
 ```shell
 ./scripts/binaries.sh
@@ -52,8 +52,8 @@ system and architecture.
 
 ## 5. Bump the version
 
-Bump the version in the `README` of `kardolus/chatgpt-cli` and in the Homebrew
-formulae (`kardolus/homebrew-chatgpt-cli/HomebrewFormula/chatgpt-cli.rb`). Update the sha256 of the macOS binaries
+Bump the version in the `README` of `bribroder/chatgpt-cli` and in the Homebrew
+formulae (`bribroder/homebrew-chatgpt-cli/HomebrewFormula/chatgpt-cli.rb`). Update the sha256 of the macOS binaries
 using:
 
 ```shell

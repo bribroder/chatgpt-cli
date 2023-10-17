@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang/mock/gomock"
-	"github.com/kardolus/chatgpt-cli/configmanager"
-	"github.com/kardolus/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/configmanager"
+	"github.com/bribroder/chatgpt-cli/types"
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"
@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-//go:generate mockgen -destination=configmocks_test.go -package=configmanager_test github.com/kardolus/chatgpt-cli/config ConfigStore
+//go:generate mockgen -destination=configmocks_test.go -package=configmanager_test github.com/bribroder/chatgpt-cli/config ConfigStore
 
 func TestUnitConfigManager(t *testing.T) {
 	spec.Run(t, "Testing the Config Manager", testConfig, spec.Report(report.Terminal{}))

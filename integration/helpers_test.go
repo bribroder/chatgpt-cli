@@ -3,9 +3,9 @@ package integration_test
 import (
 	"errors"
 	"fmt"
-	"github.com/kardolus/chatgpt-cli/config"
-	"github.com/kardolus/chatgpt-cli/types"
-	"github.com/kardolus/chatgpt-cli/utils"
+	"github.com/bribroder/chatgpt-cli/config"
+	"github.com/bribroder/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/utils"
 	"github.com/onsi/gomega/gexec"
 	"io"
 	"net/http"
@@ -24,7 +24,7 @@ func buildBinary() error {
 	var err error
 	onceBuild.Do(func() {
 		binaryPath, err = gexec.Build(
-			"github.com/kardolus/chatgpt-cli/cmd/chatgpt",
+			"github.com/bribroder/chatgpt-cli/cmd/chatgpt",
 			"-ldflags",
 			fmt.Sprintf("-X main.GitCommit=%s -X main.GitVersion=%s -X main.ServiceURL=%s", gitCommit, gitVersion, serviceURL))
 	})

@@ -2,11 +2,11 @@ package integration_test
 
 import (
 	"fmt"
-	"github.com/kardolus/chatgpt-cli/config"
-	"github.com/kardolus/chatgpt-cli/configmanager"
-	"github.com/kardolus/chatgpt-cli/history"
-	"github.com/kardolus/chatgpt-cli/types"
-	"github.com/kardolus/chatgpt-cli/utils"
+	"github.com/bribroder/chatgpt-cli/config"
+	"github.com/bribroder/chatgpt-cli/configmanager"
+	"github.com/bribroder/chatgpt-cli/history"
+	"github.com/bribroder/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/utils"
 	"github.com/onsi/gomega/gexec"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"

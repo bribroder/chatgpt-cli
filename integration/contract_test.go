@@ -2,11 +2,11 @@ package integration_test
 
 import (
 	"encoding/json"
-	"github.com/kardolus/chatgpt-cli/client"
-	"github.com/kardolus/chatgpt-cli/config"
-	"github.com/kardolus/chatgpt-cli/configmanager"
-	"github.com/kardolus/chatgpt-cli/http"
-	"github.com/kardolus/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/client"
+	"github.com/bribroder/chatgpt-cli/config"
+	"github.com/bribroder/chatgpt-cli/configmanager"
+	"github.com/bribroder/chatgpt-cli/http"
+	"github.com/bribroder/chatgpt-cli/types"
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"

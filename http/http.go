@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/kardolus/chatgpt-cli/types"
+	"github.com/bribroder/chatgpt-cli/types"
 	"io"
 	"net/http"
 	"os"

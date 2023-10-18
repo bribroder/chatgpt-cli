@@ -4,6 +4,7 @@ type CompletionsRequest struct {
 	Model    string    `json:"model"`
 	Messages []Message `json:"messages"`
 	Stream   bool      `json:"stream"`
+	Temperature float64 `json:"temperature"`
 }
 
 type Message struct {

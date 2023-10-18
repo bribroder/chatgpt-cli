@@ -17,6 +17,7 @@ const (
 	openAIModelsPath      = "/v1/models"
 	openAIRole            = "You are a helpful assistant."
 	openAIThread          = "default"
+	openAITemperature     = 1.0
 )
 
 type ConfigStore interface {
@@ -58,6 +59,7 @@ func (f *FileIO) ReadDefaults() types.Config {
 		CompletionsPath: openAICompletionsPath,
 		ModelsPath:      openAIModelsPath,
 		Thread:          openAIThread,
+		Temperature:     openAITemperature,
 	}
 }
 

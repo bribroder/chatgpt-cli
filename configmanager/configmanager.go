@@ -56,6 +56,12 @@ func (c *ConfigManager) WriteModel(model string) error {
 	return c.configStore.Write(c.Config)
 }
 
+func (c *ConfigManager) WriteTemperature(temperature float64) error {
+	c.Config.Temperature = temperature
+
+	return c.configStore.Write(c.Config)
+}
+
 func replaceByConfigFile(defaultConfig, userConfig types.Config) types.Config {
 	t := reflect.TypeOf(defaultConfig)
 	vDefault := reflect.ValueOf(&defaultConfig).Elem()

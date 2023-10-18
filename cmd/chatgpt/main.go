@@ -14,6 +14,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"strconv"
 	"time"
 )
 
@@ -29,6 +30,7 @@ var (
 	GitCommit       string
 	GitVersion      string
 	ServiceURL      string
+	temperature     string
 )
 
 func main() {
@@ -49,6 +51,7 @@ func main() {
 	rootCmd.PersistentFlags().BoolVarP(&listModels, "list-models", "l", false, "List available models")
 	rootCmd.PersistentFlags().StringVar(&modelName, "set-model", "", "Set a new default GPT model by specifying the model name")
 	rootCmd.PersistentFlags().IntVar(&maxTokens, "set-max-tokens", 0, "Set a new default max token size by specifying the max tokens")
+	rootCmd.PersistentFlags().StringVar(&temperature, "set-temperature", "1.0", "Set the temperature for the model")
 
 	viper.AutomaticEnv()
 
@@ -62,6 +65,21 @@ func run(cmd *cobra.Command, args []string) error {
 	// Flags that do not require an API key
 	if showVersion {
 		fmt.Printf("ChatGPT CLI version %s (commit %s)\n", GitVersion, GitCommit)
+		return nil
+	}
+
+	if cmd.Flag("set-temperature").Changed {
+		cm := configmanager.New(config.New())
+
+		temperature_float, err := strconv.ParseFloat(temperature, 64)
+		if err != nil {
+			return err
+		}
+
+		if err := cm.WriteTemperature(temperature_float); err != nil {
+			return err
+		}
+		fmt.Println("Temperature successfully updated to ", temperature)
 		return nil
 	}
 

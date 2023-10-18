@@ -11,4 +11,5 @@ type Config struct {
 	URL             string `yaml:"url"`
 	CompletionsPath string `yaml:"completions_path"`
 	ModelsPath      string `yaml:"models_path"`
+	Temperature     float64 `yaml:"temperature"`
 }

@@ -176,6 +176,7 @@ Configuration variables:
 | `url`              | The base URL for the OpenAI API.                                                  | 'https://api.openai.com'       |
 | `completions_path` | The API endpoint for completions.                                                 | '/v1/chat/completions'         |
 | `models_path`      | The API endpoint for accessing model information.                                 | '/v1/models'                   |
+| `temperature`      | Control the temperature, between 0 and 2.0                                        | 1.0                            |
 
 The defaults can be overridden by providing your own values in the user configuration file,
 named `.chatgpt-cli/config.yaml`, located in your home directory.

@@ -1,7 +1,9 @@
 # ChatGPT CLI
 
-This project showcases an implementation of a ChatGPT client with streaming support in a Command-Line Interface (CLI)
-environment, demonstrating its practicality and effectiveness.
+![Test Workflow](https://github.com/kardolus/chatgpt-cli/actions/workflows/test.yml/badge.svg?branch=main)
+
+ChatGPT CLI offers a robust interface for interacting with ChatGPT models directly from the command line, equipped with
+streaming and advanced configurability.
 
 ![a screenshot](resources/vhs.gif)
 
@@ -64,31 +66,31 @@ system and architecture:
 #### Apple M1 chips
 
 ```shell
-curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.2/chatgpt-darwin-arm64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
+curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.4/chatgpt-darwin-arm64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
 ```
 
 #### macOS Intel chips
 
 ```shell
-curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.2/chatgpt-darwin-amd64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
+curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.4/chatgpt-darwin-amd64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
 ```
 
 #### Linux (amd64)
 
 ```shell
-curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.2/chatgpt-linux-amd64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
+curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.4/chatgpt-linux-amd64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
 ```
 
 #### Linux (arm64)
 
 ```shell
-curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.2/chatgpt-linux-arm64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
+curl -L -o chatgpt https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.4/chatgpt-linux-arm64 && chmod +x chatgpt && sudo mv chatgpt /usr/local/bin/
 ```
 
 #### Windows (amd64)
 
 Download the binary
-from [this link](https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.2/chatgpt-windows-amd64.exe) and add it
+from [this link](https://github.com/kardolus/chatgpt-cli/releases/download/v1.3.4/chatgpt-windows-amd64.exe) and add it
 to your PATH.
 
 Choose the appropriate command for your system, which will download the binary, make it executable, and move it to your
@@ -164,19 +166,22 @@ values, the `config.yaml` file, and environment variables, in that respective or
 
 Configuration variables:
 
-| Variable           | Description                                                                       | Default                        |
-|--------------------|-----------------------------------------------------------------------------------|--------------------------------|
-| `name`             | The prefix for environment variable overrides.                                    | 'openai'                       |
-| `api_key`          | Your OpenAI API key.                                                              | (none for security)            |
-| `model`            | The GPT model used by the application.                                            | 'gpt-3.5-turbo'                |
-| `max_tokens`       | The maximum number of tokens that can be used in a single API call.               | 4096                           |
-| `role`             | The system role                                                                   | 'You are a helpful assistant.' |
-| `thread`           | The name of the current chat thread. Each unique thread name has its own context. | 'default'                      |
-| `omit_history`     | If true, the chat history will not be used to provide context for the GPT model.  | false                          |
-| `url`              | The base URL for the OpenAI API.                                                  | 'https://api.openai.com'       |
-| `completions_path` | The API endpoint for completions.                                                 | '/v1/chat/completions'         |
-| `models_path`      | The API endpoint for accessing model information.                                 | '/v1/models'                   |
-| `temperature`      | Control the temperature, between 0 and 2.0                                        | 1.0                            |
+| Variable            | Description                                                                                                                                            | Default                        |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
+| `name`              | The prefix for environment variable overrides.                                                                                                         | 'openai'                       |
+| `api_key`           | Your OpenAI API key.                                                                                                                                   | (none for security)            |
+| `model`             | The GPT model used by the application.                                                                                                                 | 'gpt-3.5-turbo'                |
+| `max_tokens`        | The maximum number of tokens that can be used in a single API call.                                                                                    | 4096                           |
+| `role`              | The system role                                                                                                                                        | 'You are a helpful assistant.' |
+| `temperature`       | What sampling temperature to use, between 0 and 2. Higher values make the output more random; lower values make it more focused and deterministic.     | 1.0                            |
+| `frequency_penalty` | Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far.                                 | 0.0                            |
+| `top_p`             | An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. | 1.0                            |
+| `presence_penalty`  | Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far.                                      | 0.0                            |
+| `thread`            | The name of the current chat thread. Each unique thread name has its own context.                                                                      | 'default'                      |
+| `omit_history`      | If true, the chat history will not be used to provide context for the GPT model.                                                                       | false                          |
+| `url`               | The base URL for the OpenAI API.                                                                                                                       | 'https://api.openai.com'       |
+| `completions_path`  | The API endpoint for completions.                                                                                                                      | '/v1/chat/completions'         |
+| `models_path`       | The API endpoint for accessing model information.                                                                                                      | '/v1/models'                   |
 
 The defaults can be overridden by providing your own values in the user configuration file,
 named `.chatgpt-cli/config.yaml`, located in your home directory.
